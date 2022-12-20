@@ -29,15 +29,19 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls, file):
         with open(file) as r_file:
-            reader = csv.reader(r_file)
-            for row in reader:  # я не понимаю, что тут дальше делать
+            reader = csv.DictReader(r_file)
+            for row in reader:
+                a = row.get('name')
+                b = float(row.get('price'))
+                c = int(row.get('quantity'))
+                cls.all.append(Item(a, b, c))
 
 
     def __str__(self):
         return f'{self.__class__.__name__}({self.name}, {self.price}, {self.quantity})'
 
 #
-# Item.instantiate_from_csv('items.csv')
-# for item in Item.all:
-#     print(item)
+Item.instantiate_from_csv('items.csv')
+for item in Item.all:
+    print(item)
 
